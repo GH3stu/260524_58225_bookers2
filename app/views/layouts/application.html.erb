@@ -24,9 +24,13 @@
   </head>
 
   <body>
+    <body>
+    <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>
     <%= render 'layouts/header' %>   <!-- _header.html.erb部分化 -->
     <main>
-     <%= yield %>
+    <%= yield %>
     </main>              
     <%= render 'layouts/footer' %>   <!-- _footer.html.erb部分化 -->
     <!-- _「Popper」と「Bootstrap Bundle」の2つを読み込むことで、Bootstrapの全機能が正常に動作 -->
