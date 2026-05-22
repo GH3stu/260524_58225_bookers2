@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "about" => "homes#about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get "users/index"  get "users/show"  get "users/edit"から書き換え
-  resources :users, only: [:index, :show, :edit]
+  resources :users, only: [:index, :show, :edit, :update]
   # さらに追加
   resources :books, only: [:index, :show, :edit, :create, :destroy, :update]
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

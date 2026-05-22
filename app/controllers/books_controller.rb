@@ -33,6 +33,12 @@ def update
   end
 end
 
+def destroy
+  book = Book.find(params[:id])  # 削除したい本を見つける
+  book.destroy                  # 削除する
+  redirect_to books_path        # 一覧画面へリダイレクト
+end
+
   private
 
   def book_params
