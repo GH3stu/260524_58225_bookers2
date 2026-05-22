@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "homes#top"
-  get "top" => "homes#top"
   get "about" => "homes#about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  # get "users/index"  get "users/show"  get "users/edit"から書き換え
+  resources :users, only: [:index, :show, :edit]
+  # さらに追加
+  resources :books, only: [:index, :show, :edit, :create, :destroy, :update]
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
