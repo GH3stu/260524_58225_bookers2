@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
   root to: "homes#top"
+  get 'session/new', to: 'users/sessions#new'
   get "home/about" => "homes#about", as: "about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get "users/index"  get "users/show"  get "users/edit"から書き換え
