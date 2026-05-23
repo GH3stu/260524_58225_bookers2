@@ -1,13 +1,15 @@
 class BooksController < ApplicationController
+  before_action :redirect_to_login
+
   def create
     # 投稿データを受け取って保存する処理
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
+      flash[:notice] = "Book was successfully created."
       redirect_to book_path(@book) # 成功したら詳細画面へ
     else
       @books = Book.all
-      @book = @book
       render :index # 失敗したら一覧画面に戻す（※一覧画面が必要）
     end
   end
@@ -22,8 +24,9 @@ class BooksController < ApplicationController
   end
 
   def edit
-  @book = Book.find(params[:id])
-end
+    @book = Book.find(params[:id])
+    redirect_to books_path unless @book.user == current_user
+  end
 
 def update
   @book = Book.find(params[:id])
@@ -45,5 +48,9 @@ end
 
   def book_params
     params.require(:book).permit(:title, :body)
+  end
+
+  def redirect_to_login
+    redirect_to new_session_path unless user_signed_in?
   end
 end

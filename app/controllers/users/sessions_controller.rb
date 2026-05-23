@@ -7,7 +7,13 @@ class Users::SessionsController < Devise::SessionsController
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource)
     else
-      redirect_to session_new_path
+      redirect_to new_session_path
     end
+  end
+
+  protected
+
+  def after_failed_login_path_for(resource)
+    new_session_path
   end
 end

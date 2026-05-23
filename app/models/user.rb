@@ -6,6 +6,15 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
+  # Email address alias for specs that use user[email_address]
+  def email_address
+    email
+  end
+
+  def email_address=(value)
+    self.email = value
+  end
+
   # 画像を使用するための記述を追加します
   has_one_attached :profile_image       
   has_many :books, dependent: :destroy
