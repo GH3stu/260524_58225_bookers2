@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
+  get '/session/new', to: 'sessions#new'
   root to: "homes#top"
   get "home/about" => "homes#about", as: "about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

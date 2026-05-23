@@ -218,25 +218,12 @@ describe '[STEP1] ユーザログイン前のテスト' do
     end
 
     context 'ヘッダーの表示を確認' do
-      it 'Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
-        home_link = find_all('a')[0].text
-        expect(home_link).to match(/Bookers/)
-      end
-      it 'Homeリンクが表示される: 左上から2番目のリンクが「Home」である', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
-        home_link = find_all('a')[1].text
-        expect(home_link).to match(/Home/)
-      end
-      it 'Usersリンクが表示される: 左上から3番目のリンクが「Users」である', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
-        users_link = find_all('a')[2].text
-        expect(users_link).to match(/Users/)
-      end
-      it 'Booksリンクが表示される: 左上から4番目のリンクが「Books」である', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
-        books_link = find_all('a')[3].text
-        expect(books_link).to match(/Books/)
-      end
-      it 'Log outリンクが表示される: 左上から5番目のリンクが「Log out」である', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
-        logout_link = find_all('a')[4].text
-        expect(logout_link).to match(/Log out/)
+      it 'ログイン時に必要なナビゲーションリンクが表示される', spec_category: "ログイン状況に合わせた画面表示や機能制限のロジック設定" do
+        expect(page).to have_link 'Bookers', href: '/'
+        expect(page).to have_link 'Home', href: user_path(user)
+        expect(page).to have_link 'Users', href: users_path
+        expect(page).to have_link 'Books', href: books_path
+        expect(page).to have_link 'Log out', href: destroy_user_session_path
       end
     end
   end
