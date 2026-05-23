@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "homes#top"
-  get "home/about" => "homes#about"
+  get "home/about" => "homes#about", as: "about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get "users/index"  get "users/show"  get "users/edit"から書き換え
   resources :users, only: [:index, :show, :edit, :update]
