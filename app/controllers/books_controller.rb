@@ -4,8 +4,10 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
-      redirect_to book_path(@book.id) # 成功したら詳細画面へ
+      redirect_to book_path(@book) # 成功したら詳細画面へ
     else
+      @books = Book.all
+      @book = @book
       render :index # 失敗したら一覧画面に戻す（※一覧画面が必要）
     end
   end
