@@ -102,7 +102,7 @@ describe '[STEP1] ユーザログイン前のテスト' do
         login_link = find_all('a')[4].text
         login_link = login_link.gsub(/\n/, '').gsub(/\A\s*/, '').gsub(/\s*\Z/, '')
         click_link login_link, match: :first
-        is_expected.to eq '/session/new'
+        is_expected.to eq '/users/sign_in'
       end
     end
   end
@@ -122,8 +122,8 @@ describe '[STEP1] ユーザログイン前のテスト' do
       it 'nameフォームが表示される', spec_category: "deviseの基本的な導入・認証設定" do
         expect(page).to have_field 'user[name]'
       end
-      it 'email_addressフォームが表示される', spec_category: "deviseの基本的な導入・認証設定" do
-        expect(page).to have_field 'user[email_address]'
+      it 'emailフォームが表示される', spec_category: "deviseの基本的な導入・認証設定" do
+        expect(page).to have_field 'user[email]'
       end
       it 'passwordフォームが表示される', spec_category: "deviseの基本的な導入・認証設定" do
         expect(page).to have_field 'user[password]'
@@ -138,8 +138,8 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     context '新規登録成功のテスト' do
       before do
-        fill_in 'user[name]', with: Faker::Lorem.characters(number: 10)
-        fill_in 'user[email_address]', with: Faker::Internet.email
+        fill_in 'user[name]', with: 'testuser'
+        fill_in 'user[email]', with: 'test@example.com'
         fill_in 'user[password]', with: 'password'
         fill_in 'user[password_confirmation]', with: 'password'
       end
@@ -163,7 +163,7 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     context '表示内容の確認' do
       it 'URLが正しい', spec_category: "deviseの基本的な導入・認証設定" do
-        expect(current_path).to eq '/session/new'
+        expect(current_path).to eq '/users/sign_in'
       end
       it '「Log in」と表示される', spec_category: "deviseの基本的な導入・認証設定" do
         expect(page).to have_content 'Log in'
@@ -184,7 +184,7 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     context 'ログイン成功のテスト' do
       before do
-        fill_in 'name', with: user.name
+        fill_in 'user_name', with: user.name
         fill_in 'password', with: user.password
         click_button 'Log in'
       end
@@ -196,7 +196,7 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     context 'ログイン失敗のテスト' do
       before do
-        fill_in 'name', with: ''
+        fill_in 'user_name', with: ''
         fill_in 'password', with: ''
         click_button 'Log in'
       end
@@ -212,7 +212,7 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     before do
       visit new_user_session_path
-      fill_in 'name', with: user.name
+      fill_in 'user_name', with: user.name
       fill_in 'password', with: user.password
       click_button 'Log in'
     end
@@ -246,8 +246,8 @@ describe '[STEP1] ユーザログイン前のテスト' do
 
     before do
       visit new_user_session_path
-      fill_in 'name', with: user.name
-      fill_in 'password', with: user.password
+      fill_in 'user_name', with: user.name
+      fill_in 'user_password', with: user.password
       click_button 'Log in'
       logout_link = find_all('a')[4].text
       logout_link = logout_link.gsub(/\n/, '').gsub(/\A\s*/, '').gsub(/\s*\Z/, '')

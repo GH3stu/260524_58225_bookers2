@@ -4,7 +4,11 @@
       <h2>User info</h2>
       <table class='table'>
         <tr>
-          <%= image_tag @user.get_profile_image(100, 100) %>
+          <% if @user.get_profile_image(100, 100).is_a?(String) %>
+          <%= image_tag @user.get_profile_image(100, 100), size: "100x100" %>
+          <% else %>
+          <%= image_tag user.get_profile_image(100, 100).processed %>
+          <% end %>
         </tr>
         <tr>
           <th>name</th>
@@ -16,8 +20,10 @@
         </tr>
       </table>
       <div class='row'>
-        <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
-          <i class="fas fa-user-cog"></i>
+        <% if user_signed_in? %>
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>    
         <% end %>
       </div>
 
@@ -34,6 +40,29 @@
         <%= f.submit 'Create Book', class: 'btn btn-success' %>
       <% end %>
     </div>
+
+      <h2>Sign up</h2>
+      <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+        <div class="field">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field">
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+        </div>
+        <div class="field">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "Sign up" %>
+        </div>
+      <% end %>
 
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>

@@ -11,12 +11,11 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
 
   # 画像を表示するためのメソッドを追記
-  def get_profile_image
+  def get_profile_image(width, height)
   # 画像があるか確認し、なければデフォルト画像を返す
     unless profile_image.attached?
-      file_path = Rails.root.join('app/assets/images/default-image.jpg')
-      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+      return 'default-image.jpg'
     end
-  profile_image.variant(resize_to_limit: [100, 100]).processed
+  profile_image.variant(resize_to_limit: [width, height]).processed
   end
 end
