@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
-  }
+  devise_for :users
   root to: "homes#top"
   get 'session/new', to: 'users/sessions#new'
   get "home/about" => "homes#about", as: "about"

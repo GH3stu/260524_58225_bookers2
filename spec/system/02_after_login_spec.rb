@@ -7,9 +7,9 @@ describe '[STEP2] ユーザログイン後のテスト' do
   let!(:other_book) { create(:book, user: other_user) }
 
   before do
-    visit new_session_path
-    fill_in 'name', with: user.name
-    fill_in 'password', with: user.password
+    visit new_user_session_path
+    fill_in 'user_name', with: user.name
+    fill_in 'user_password', with: user.password
     click_button 'Log in'
   end
 
