@@ -1,0 +1,27 @@
+.btn-turquoise {
+	background-color: #1abc9c;
+	border-color: #1abc9c;
+}
+
+/* Bootstrap の .btn-info を残したまま色だけ上書きするための高優先度セレクタ */
+.btn.btn-info.btn-turquoise,
+.btn-info.btn-turquoise {
+	background-color: #1abc9c !important;
+	/border-color: #1abc9c !important;
+	color: #ffffff !important;
+}
+
+/* ホバー・フォーカス時も色が変わらないようにする */
+.btn.btn-info.btn-turquoise:hover,
+.btn.btn-info.btn-turquoise:focus,
+.btn.btn-info.btn-turquoise:active {
+	background-color: #16a085 !important;
+	border-color: #16a085 !important;
+	color: #ffffff !important;
+}
+
+/* テキスト用ユーティリティ（必要なら個別で使う） */
+.text-turquoise {
+	color: #1abc9c !important;
+}
+
