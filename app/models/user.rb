@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
+  has_many :book_comments, dependent: :destroy
+
   # Email address alias for specs that use user[email_address]
   def email_address
     email

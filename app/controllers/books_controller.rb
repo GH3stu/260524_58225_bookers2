@@ -15,12 +15,13 @@ class BooksController < ApplicationController
   end
 
   def index
-  @books = Book.all
-  @book = Book.new # 新規投稿用
+    @books = Book.all
+    @book = Book.new # 新規投稿用
   end
 
   def show
-  @book = Book.find(params[:id])
+    @book = Book.find(params[:id])
+    @book_comment = BookComment.new
   end
 
   def edit
@@ -28,21 +29,21 @@ class BooksController < ApplicationController
     redirect_to books_path unless @book.user == current_user
   end
 
-def update
-  @book = Book.find(params[:id])
-  if @book.update(book_params)
-    flash[:notice] = "Book was successfully updated."
-    redirect_to book_path(@book.id)
-  else
-    render :edit
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:notice] = "Book was successfully updated."
+      redirect_to book_path(@book.id)
+    else
+      render :edit
+    end
   end
-end
 
-def destroy
-  book = Book.find(params[:id])  # 削除したい本を見つける
-  book.destroy                  # 削除する
-  redirect_to books_path        # 一覧画面へリダイレクト
-end
+  def destroy
+    book = Book.find(params[:id])  # 削除したい本を見つける
+    book.destroy                  # 削除する
+    redirect_to books_path        # 一覧画面へリダイレクト
+  end
 
   private
 
