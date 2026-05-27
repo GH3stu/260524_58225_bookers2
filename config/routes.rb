@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get "users/index"  get "users/show"  get "users/edit"から書き換え
   resources :users, only: [:index, :show, :edit, :update] do
-    resources :relationships, only: [:create, :destroy]
-    get "followings" => "users#followings", as: "followings"
-    get "followers" => "users#followers", as: "followers"
+  resource :relationships, only: [:create, :destroy]
+  get 'followings' => 'relationships#followings', as: 'followings'
+  get 'followers' => 'relationships#followers', as: 'followers'
   end
   resources :books, only: [:index, :show, :edit, :create, :destroy, :update] do
   resources :book_comments, only: [:create, :destroy]
