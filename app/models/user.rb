@@ -10,6 +10,12 @@ class User < ApplicationRecord
 
   has_many :favorites, dependent: :destroy
 
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  # 追記：フォローされている側の情報を取得する設定
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followings, through: :relationships, source: :followed
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+
   # Email address alias for specs that use user[email_address]
   def email_address
     email

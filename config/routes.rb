@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get "home/about" => "homes#about", as: "about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # get "users/index"  get "users/show"  get "users/edit"から書き換え
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:index, :show, :edit, :update] do
+    resources :relationships, only: [:create, :destroy]
+    get "followings" => "users#followings", as: "followings"
+    get "followers" => "users#followers", as: "followers"
+  end
   resources :books, only: [:index, :show, :edit, :create, :destroy, :update] do
   resources :book_comments, only: [:create, :destroy]
   resource :favorite, only: [:create, :destroy]
