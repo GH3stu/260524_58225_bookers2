@@ -76,6 +76,20 @@
           <%= link_to "Destroy", book_book_comment_path(comment.book, comment), method: :delete %>
         <% end %>
       <% end %>
+
+        <% if @book.favorited_by?(current_user) %>
+          <p>
+            <%= link_to book_favorite_path(@book), data: { turbo_method: :delete } do %>
+              ♥<%= @book.favorites.count %> いいね
+            <% end %>
+          </p>
+        <% else %>
+          <p>
+            <%= link_to book_favorite_path(@book), data: { turbo_method: :post } do %>
+              ♡<%= @book.favorites.count %> いいね
+            <% end %>
+          </p>
+        <% end %>
     </div>
 
     <div>

@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_many :book_comments, dependent: :destroy
 
+  has_many :favorites, dependent: :destroy
+
   # Email address alias for specs that use user[email_address]
   def email_address
     email
