@@ -16,6 +16,21 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
+  # ★ フォローする
+  def follow(user)
+    relationships.create(followed_id: user.id)
+  end
+
+  # ★ フォロー外す
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id)&.destroy
+  end
+
+  # ★ フォローしているか判定
+  def following?(user)
+    followings.include?(user)
+  end
+
   # Email address alias for specs that use user[email_address]
   def email_address
     email
@@ -26,15 +41,15 @@ class User < ApplicationRecord
   end
 
   # 画像を使用するための記述を追加します
-  has_one_attached :profile_image       
+  has_one_attached :profile_image
   has_many :books, dependent: :destroy
 
   # 画像を表示するためのメソッドを追記
   def get_profile_image(width, height)
-  # 画像があるか確認し、なければデフォルト画像を返す
+    # 画像があるか確認し、なければデフォルト画像を返す
     unless profile_image.attached?
-      return 'default-image.jpg'
+      return "default-image.jpg"
     end
-  profile_image.variant(resize_to_limit: [width, height]).processed
+  profile_image.variant(resize_to_limit: [ width, height ]).processed
   end
 end
