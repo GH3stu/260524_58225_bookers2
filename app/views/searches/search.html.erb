@@ -12,9 +12,9 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
+          <%= image_tag user.get_profile_image(50, 50) %> 
           <td><%= user.name %></td>
-          <td><%= link_to 'Show', user_path(user) %></td>
+          <td><%= link_to user.name, user_path(user) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -32,7 +32,7 @@
         <tr>
           <td>
             <%= link_to user_path(book.user) do %>
-              <%= image_tag book.user.get_profile_image(50, 50), fallback: "no-image-icon.jpg") %>
+              <%= image_tag book.user.get_profile_image(50, 50) %>
             <% end %>
           </td>
           <td><%= link_to book.title, book_path(book) %></td>
