@@ -16,6 +16,17 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
+  def self.search_for(content, method)
+    if method == 'perfect_match'
+      @user = User.where(name: content)
+    elsif method == 'forward_match'
+      @user = User.where('name LIKE ?', content + '%')
+    elsif method == 'backward_match'
+      @user = User.where('name LIKE ?', '%' + content)
+    else
+      @user = User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
   # ★ フォローする
   def follow(user)
     relationships.create(followed_id: user.id)
