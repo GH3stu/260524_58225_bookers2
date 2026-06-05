@@ -77,19 +77,10 @@
         <% end %>
       <% end %>
 
-        <% if @book.favorited_by?(current_user) %>
-          <p>
-            <%= link_to book_favorite_path(@book), data: { turbo_method: :delete } do %>
-              ♥<%= @book.favorites.count %> いいね
-            <% end %>
-          </p>
-        <% else %>
-          <p>
-            <%= link_to book_favorite_path(@book), data: { turbo_method: :post } do %>
-              ♡<%= @book.favorites.count %> いいね
-            <% end %>
-          </p>
-        <% end %>
+      <%# 変更「favoritesフォルダの中の_favorite_btn.html.erbというファイルを読み込んで」と指示 %>
+      <%= turbo_frame_tag dom_id(@book, :favorite) do %>
+        <%= render 'favorites/favorite_btn', book: @book %>
+      <% end %>
     </div>
 
     <div>
