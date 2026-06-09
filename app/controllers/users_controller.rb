@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :redirect_to_login
+  before_action :ensure_guest_user, only: [:edit, :update]
 
   def index
     @users = User.all  
@@ -37,6 +38,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    # ★dry原則に基づいて、直接メールアドレスを判定するのではなく、作成したメソッドを使います
+    if @user.guest_user?
+      redirect_to user_path(Current.user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end
 
   def redirect_to_login
     redirect_to new_session_path unless user_signed_in?

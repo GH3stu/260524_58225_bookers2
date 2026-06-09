@@ -8,6 +8,10 @@
       
       <div class="btn-wrapper col-10 mx-auto">
         <div class="row">
+          <%= button_to "ゲストログイン（閲覧用）", guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in" %>
+        </div>
+        
+        <div class="row">
           <%= link_to "Log in", new_user_session_path, class: "btn btn-info btn-turquoise btn-sm btn-block mb-3 text-white" %>
         </div>
         <div class="row">

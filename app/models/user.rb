@@ -41,13 +41,26 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
+  
+  GUEST_USER_EMAIL = "guest@example.com"
+
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
+
+  def guest_user?  # dry原則に基づいて追加したメソッド
+    email == GUEST_USER_EMAIL
+  end
 
   # Email address alias for specs that use user[email_address]
   def email_address
     email
   end
 
-  def email_address=(value)
+  def email_address=(value) 
     self.email = value
   end
 
