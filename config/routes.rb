@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :show, :edit, :create, :destroy, :update] do
     resources :book_comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
+    resources :notifications, only: [:update]
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
